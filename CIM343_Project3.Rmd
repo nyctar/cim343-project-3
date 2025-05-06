@@ -11,35 +11,64 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(sf)
-library(dplyr)
-library(tidyr)
-library(comtradr)
-library(data.table)
+library(tidyverse)
 library(geojsonio)
+library(rmapshaper)
 ```
 ```{r}
-library(sf)
-library(dplyr)
-library(readr)
-library(geojsonio)
+# Load GeoJSON
+world <- st_read("countries.geojson")
 
-# Load simplified GeoJSON
-world <- st_read("path/to/simplified_world.geojson")
-
+# Simplify geometry
+world_simple <- ms_simplify(world, keep = 0.0001, keep_shapes = TRUE)
+```
+```{r}
 # Load your SDG CSV
 sdg <- read_csv("SI_POV_DAY1.csv")
 
 # Preview column names
-names(sdg)
-
-# Filter to a single year if needed
-sdg_latest <- sdg %>% filter(TimePeriod == 2022)  # adjust column name and year
-
-# Join by ISO code (adjust field names as needed)
-world_sdg <- world %>%
-  left_join(sdg_latest, by = c("ISO_A3" = "GeoAreaCode"))  # or "Country Code"
-
-# Write new GeoJSON
-geojson_write(world_sdg, file = "sdg_joined.geojson")
-
+head(sdg)
 ```
+```{r}
+sdg_filtered <- sdg %>%
+  filter(Age == "ALLAGE",
+         Location == "ALLAREA",
+         Sex == "BOTHSEX",
+         Units == "PERCENT") %>%
+  select(GeoAreaCode, GeoAreaName, Value = `2020`)
+```
+```{r}
+# Merge SDG data with shapefile
+world_sdg <- world %>%
+  left_join(sdg_filtered, by = c("name" = "GeoAreaName"))
+```
+```{r}
+# Filter invalid ISO codes after join
+world_sdg <- world_sdg %>%
+  filter(ISO3166.1.Alpha.3 != "-99")
+```
+```{r}
+st_drop_geometry(world_sdg)
+```
+```{r}
+ggplot(data = world_sdg) +
+  geom_sf(aes(fill = Value), color = "white", size = 0.1) +
+  scale_fill_viridis_c(
+    option = "C",
+    na.value = "gray90",
+    name = "% Population"
+  ) +
+  theme_minimal() +
+  labs(
+    title = "SDG Indicator: % of Population Living on Less Than $1.90/Day (2020)",
+    subtitle = "All ages, all areas, both sexes",
+    caption = "Source: UN SDG Global Database"
+  )
+```
+
+
+```{r}
+# Write new GeoJSON
+geojson_write(world_sdg, file = "sdg-poverty-2020.geojson")
+```
+
