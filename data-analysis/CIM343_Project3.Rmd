@@ -18,11 +18,15 @@ library(readxl)
 ```
 ```{r}
 # load GeoJSON
-world <- st_read("countries.geojson")
-
-# simplify geometry
-world_simple <- ms_simplify(world, keep = 0.0001, keep_shapes = TRUE)
+world_simple <- st_read("countries.geojson")
 ```
+```{r}
+geo_names <- world_simple %>% 
+  pull(name)
+geo_names
+writeLines(geo_names, "geo_country_names.txt")
+```
+
 ```{r}
 # load your SDG CSV
 sdg <- read_csv("SDR2024-data.csv")
@@ -30,7 +34,6 @@ sdg <- read_csv("SDR2024-data.csv")
 # preview
 glimpse(sdg)
 ```
-
 ```{r}
 # select data
 sdg_selected <- sdg %>%
@@ -46,6 +49,43 @@ sdg_long <- sdg_selected %>%
   mutate(
     Goal = ifelse(Goal == "SDG Index Score", "goal0", Goal)
   )
+```
+```{r}
+data_names <- sdg_long %>%
+  distinct(Country) %>%
+  pull(Country)
+
+data_names
+
+writeLines(data_names, "data_country_names.txt")
+```
+```{r}
+sdg_long <- sdg_long %>%
+  mutate(Country = case_when(
+    Country %in% c("United States", "United States of America") ~ "USA",
+    Country == "United Kingdom" ~ "England",
+    Country == "Tanzania" ~ "United Republic of Tanzania",
+    Country == "Serbia" ~ "Republic of Serbia",
+    Country == "Cote d'Ivoire" ~ "Ivory Coast",
+    Country %in% c("South Korea", "Korea, Rep.") ~ "South Korea",
+    Country %in% c("North Korea", "Korea, Dem. People's Rep.") ~ "North Korea",
+    Country %in% c("North Macedonia", "Macedonia") ~ "Macedonia",
+    Country %in% c("Russia", "Russian Federation") ~ "Russia",
+    Country %in% c("Iran", "Iran, Islamic Rep.") ~ "Iran",
+    Country %in% c("Venezuela", "Venezuela, RB") ~ "Venezuela",
+    Country %in% c("Egypt", "Egypt, Arab Rep.") ~ "Egypt",
+    Country %in% c("The Bahamas", "Bahamas", "Bahamas, The") ~ "The Bahamas",
+    Country %in% c("Gambia", "Gambia, The") ~ "Gambia",
+    Country %in% c("Czech Republic", "Czechia") ~ "Czech Republic",
+    Country %in% c("Slovakia", "Slovak Republic") ~ "Slovakia",
+    Country %in% c("Syria", "Syrian Arab Republic") ~ "Syria",
+    Country %in% c("Laos", "Lao PDR") ~ "Laos",
+    Country %in% c("Turkey", "Türkiye") ~ "Turkey",
+    Country %in% c("Swaziland", "Eswatini") ~ "Eswatini",
+    Country %in% c("Brunei", "Brunei Darussalam") ~ "Brunei",
+    Country %in% c("Kyrgyzstan", "Kyrgyz Republic") ~ "Kyrgyzstan",
+    TRUE ~ Country
+  ))
 ```
 ```{r}
 glimpse(sdg_long)
@@ -66,28 +106,14 @@ sdg_filtered <- sdg_long %>%
 print(paste("Number of countries with data:", nrow(sdg_filtered)))
 
 # Join with world data
-# If joining by ID doesn't work well, we'll fall back to country name
-if("id" %in% colnames(world_simple) && "id" %in% colnames(sdg_filtered)) {
-  world_sdg <- world_simple %>%
-    left_join(sdg_filtered, by = "id") %>%
-    mutate(
-      # Ensure Value is a character and handle NAs properly
-      Value = ifelse(is.na(Value), "NA", as.character(Value))
-    ) %>%
-    # Select only needed columns
-    select(id, name, GeoAreaCode, Value, geometry)
-} else {
   world_sdg <- world_simple %>%
     left_join(sdg_filtered, by = c("name" = "Country")) %>%
     mutate(
-      # Add GeoAreaCode (using the country id)
-      GeoAreaCode = id,
       # Ensure Value is a character and handle NAs properly
       Value = ifelse(is.na(Value), "NA", as.character(Value))
     ) %>%
     # Select only needed columns
-    select(id, name, GeoAreaCode, Value, geometry)
-}
+    select(id, name, Value, geometry)
 
 # Count how many countries have data
 data_count <- sum(!is.na(world_sdg$Value) & world_sdg$Value != "NA")
@@ -102,6 +128,24 @@ file_name <- paste0("sdg-", g, "-", y, ".geojson")
 geojson_write(world_sdg, file = file_name)
 print(paste("Created test file:", file_name))
 ```
+```{r}
+library(ggplot2)
+library(viridis)
+
+ggplot(data = world_sdg) +
+  geom_sf(aes(fill = as.numeric(Value)), color = "white", size = 0.1) +
+  scale_fill_viridis_c(
+    option = "C",
+    na.value = "gray90",
+    name = "Value",
+    direction = -1
+  ) +
+  theme_minimal() +
+  labs(
+    title = paste("Choropleth of", g, "for", y),
+    subtitle = "Countries colored by their Value",
+    caption = "Source: Your data"
+  )
 ```
 
 ```{r}
@@ -135,20 +179,18 @@ for (g in goals) {
 }
 ```
 
-
-
-
-
-
-
-
-
-
 ```{r}
 geo_data <- st_read("sdg-poverty-2020.geojson")
 glimpse(st_drop_geometry(geo_data))
 ```
 ```{r}
-geo_data <- st_read("sdg-goal17-2023.geojson")
+geo_data <- st_read("sdg-goal1-2020.geojson")
 glimpse(st_drop_geometry(geo_data))
 ```
+```{r}
+final_names <- geo_data %>% 
+  pull(name)
+final_names
+writeLines(final_names, "final_country_names.txt")
+```
+
