@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Globe</title>
   <!-- style -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 
   <!-- libraries -->
   <script src="//cdn.jsdelivr.net/npm/globe.gl"></script>
@@ -18,10 +18,233 @@
 
 </head>
 <body>
+
+  <div id="viewport-warning">
+    <div id="viewport-text">
+      This site is not optimized for mobile. <br>
+      Use a larger display to continue.
+    </div>
+  </div>
+
   <div id="globe-container"></div>
   <div id="tooltip"></div>
+  
+  <header class="title-section">
+    <h1>Sustainable Development<br>Goals Index Tracker</h1>
+    <p>
+      The Sustainable Development Report calculates the index
+      by looking at various demographic measures (indicators)
+      of a specific country to track whether the country is making
+      progress towards the Sustainable Development Goals (SDG).
+      <strong>The country is progressing better towards the goal with the
+      higher index.
+    </strong>
+    </p>
+  </header>
+
+  <div class="sidebar">
+    <div class="panel panel-top">
+      <div class="panel-indicator" id="panel-indicator-top">
+        <label for="indicator">Select SDG Index</label>
+        <select id="indicator">
+          <option selected>Goal 1: No Poverty</option>
+          <option>Goal 2: Zero Hunger</option>
+          <option>Goal 3: Good Health and Well-being</option>
+          <option>Goal 4: Quality Education</option>
+          <option>Goal 5: Gender Equality</option>
+          <option>Goal 6: Clean Water and Sanitation</option>
+          <option>Goal 7: Affordable and Clean Energy</option>
+          <option>Goal 8: Decent Work and Economic Growth</option>
+          <option>Goal 9: Industry, Innovation, and Infrastructure</option>
+          <option>Goal 10: Reduced Inequalities</option>
+          <option>Goal 11: Sustainable Cities and Communities</option>
+          <option>Goal 12: Responsible Consumption and Production</option>
+          <option>Goal 13: Climate Action</option>
+          <option>Goal 14: Life Below Water</option>
+          <option>Goal 15: Life on Land</option>
+          <option>Goal 16: Peace, Justice, and Strong Institutions</option>
+          <option>Goal 17: Partnerships for the Goals</option>
+        </select>
+      </div>
+      <div class="panel-indicator">
+        <label for="filter">Filter By Year</label>
+        <select id="year">
+          <option>2010</option>
+          <option>2011</option>
+          <option>2012</option>
+          <option>2013</option>
+          <option>2014</option>
+          <option>2015</option>
+          <option>2016</option>
+          <option>2017</option>
+          <option>2018</option>
+          <option>2019</option>
+          <option selected>2020</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="panel panel-bottom">
+    <div id="1">
+      <h2>Goal 1: No Poverty</h2>
+      <h3>End poverty in all its forms everywhere</h3>
+      <img src="logos/E_WEB_01.png" alt="No Poverty logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Poverty headcount ratio at $2.15/day (2017 PPP, %), Poverty headcount ratio at $3.65/day (2017 PPP, %)</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="2">
+      <h2>Goal 2: Zero Hunger</h2>
+      <h3>End hunger, achieve food security and improved nutrition and promote sustainable agriculture</h3>
+      <img src="logos/E_WEB_02.png" alt="Zero Hunger logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Prevalence of undernourishment (%), Prevalence of stunting in children under 5 years of age (%), Prevalence of wasting in children under 5 years of age (%), Prevalence of obesity, BMI ≥ 30 (% of adult population), Human Trophic Level (best 2-3 worst), Cereal yield (tonnes per hectare of harvested land), Sustainable Nitrogen Management Index (best 0-1.41 worst), Exports of hazardous pesticides (tonnes per million population)</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="3">
+      <h2>Goal 3: Good Health and Well-being</h2>
+      <h3>Ensure healthy lives and promote well-being for all at all ages</h3>
+      <img src="logos/E_WEB_03.png" alt="Good Health and Well-being logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="4">
+      <h2>Goal 4: Quality Education</h2>
+      <h3>Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all</h3>
+      <img src="logos/E_WEB_04.png" alt="Quality Education logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="5">
+      <h2>Goal 5: Gender Equality</h2>
+      <h3>Achieve gender equality and empower all women and girls</h3>
+      <img src="logos/E_WEB_05.png" alt="Gender Equality logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="6">
+      <h2>Goal 6: Clean Water and Sanitation</h2>
+      <h3>Ensure availability and sustainable management of water and sanitation for all</h3>
+      <img src="logos/E_WEB_06.png" alt="Clean Water and Sanitation logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="7">
+      <h2>Goal 7: Affordable and Clean Energy</h2>
+      <h3>Ensure access to affordable, reliable, sustainable and modern energy for all</h3>
+      <img src="logos/E_WEB_07.png" alt="Affordable and Clean Energy logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="8">
+      <h2>Goal 8: Decent Work and Economic Growth</h2>
+      <h3>Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all</h3>
+      <img src="logos/E_WEB_08.png" alt="Decent Work and Economic Growth logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="9">
+      <h2>Goal 9: Industry, Innovation, and Infrastructure</h2>
+      <h3>Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation</h3>
+      <img src="logos/E_WEB_09.png" alt="Industry, Innovation, and Infrastructure logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="10">
+      <h2>Goal 10: Reduced Inequalities</h2>
+      <h3>Reduce inequality within and among countries</h3>
+      <img src="logos/E_WEB_10.png" alt="Reduced Inequalities logo" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="11">
+      <h2>Goal 11: Sustainable Cities and Communities</h2>
+      <h3>Make cities and human settlements inclusive, safe, resilient and sustainable</h3>
+      <img src="logos/E_WEB_11.png" alt="Sustainable Cities and Communities" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="12">
+      <h2>Goal 12: Responsible Consumption and Production</h2>
+      <h3>Ensure sustainable consumption and production patterns</h3>
+      <img src="logos/E_WEB_12.png" alt="Responsible Consumption and Production" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="13">
+      <h2>Goal 13: Climate Action</h2>
+      <h3>Take urgent action to combat climate change and its impacts</h3>
+      <img src="logos/E_WEB_13.png" alt="Climate Action" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="14">
+      <h2>Goal 14: Life Below Water</h2>
+      <h3>Conserve and sustainably use the oceans, seas and marine resources for sustainable development</h3>
+      <img src="logos/E_WEB_14.png" alt="Life Below Water" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="15">
+      <h2>Goal 15: Life on Land</h2>
+      <h3>Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss</h3>
+      <img src="logos/E_WEB_15.png" alt="Life on Land" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="16">
+      <h2>Goal 16: Peace, Justice, and Strong Institutions</h2>
+      <h3>Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels</h3>
+      <img src="logos/E_WEB_16.png" alt="Peace, Justice, and Strong Institutions" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="17">
+      <h2>Goal 17: Partnerships for the Goals</h2>
+      <h3>Strengthen the means of implementation and revitalize the Global Partnership for Sustainable Development</h3>
+      <img src="logos/E_WEB_17.png" alt="Partnerships for the Goals" class="goal-icon">
+      <hr>
+      <p><strong>Indicator:</strong> Lorem ipsum dolor sit amet, Consectetur adipiscing elit, Sed do eiusmod tempor incididunt ut.</p>
+      <hr>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+  </div>
 
   <!-- script -->
-  <script type="module" src="script.js"></script>
+  <script type="module" src="js/globe.js"></script>
+  <script type="module" src="js/indicator-selector.js"></script>
+
+  <footer class="footer">
+    <p>Data from United Nations Department of Economic and Social Affairs · SDG Indicators Database · The Sustainable Development Report </p>
+  </footer>
 </body>
 </html>

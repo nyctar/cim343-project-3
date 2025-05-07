@@ -1,0 +1,192 @@
+/* globe */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Urbanist", sans-serif;
+}
+#globe-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.globe-label {
+  font-family: "Urbanist", sans-serif;
+  pointer-events: none;
+  font-size: 0.8rem;
+}
+
+/* tooltip */
+.tooltip-title {
+  font-family: "Urbanist", sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+/* footer */
+.footer {
+  background-color: #eb1c2d;
+  color: #F7F4F3;
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 3px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  text-shadow: 1.5px 1.5px 5px #0B0A0A;
+}
+
+/* title */
+.title-section {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  color: #F7F4F3;
+  font-family: 'Krona One', sans-serif;
+  z-index: 999;
+}
+
+.title-section h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.title-section p {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1rem;
+  margin: 0;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  width: 34%;
+}
+
+/* container */
+.sidebar {
+  position: absolute;
+  top: 320px;
+  left: 50px;
+  width: 22%;
+  color: #F7F4F3;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 1rem;
+  z-index: 10;
+}
+
+.panel {
+  background: #343232;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+#panel-indicator-top {
+  padding-bottom: 10px;
+}
+
+.panel label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.panel select {
+  font-family: 'Urbanist', sans-serif;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.panel-top {
+  padding-top: 10px;
+}
+
+.panel-bottom {
+  max-height: 215px;
+  overflow-y: auto;
+}
+
+.panel-bottom h2 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.panel-bottom h3 {
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-size: 0.8rem;
+  text-align: center;
+  font-weight: normal;
+}
+
+.panel-bottom p {
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+
+.goal-icon {
+  display: block;
+  width: 45%;
+  margin: 0px auto;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+hr {
+  border-color: #F7F4F3;
+}
+
+/* scroll bar */
+.panel-bottom::-webkit-scrollbar {
+  width: 6px;
+}
+
+.panel-bottom::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color, #eb1c2d);
+  border-radius: 20px;
+}
+
+.panel-bottom::-webkit-scrollbar-thumb:hover {
+  background-color: #F7F4F3;
+}
+
+.panel-bottom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* not for mobile */
+#viewport-warning {
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  background-color: #0B0A0A;
+  color: #F7F4F3;
+  z-index: 9999;
+}
+
+#viewport-text {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 50vh;
+  padding-left: 10vw;
+  padding-right: 10vw;
+}
+
+@media (max-width: 768px) {
+  #viewport-warning {
+    display: block;
+  }
+
+  #globe-container,
+  .sidebar,
+  .footer,
+  .title-section {
+    display: none;
+  }
+}

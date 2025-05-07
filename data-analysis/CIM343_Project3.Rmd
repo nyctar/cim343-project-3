@@ -1,0 +1,154 @@
+---
+title: "CIM343_Project3"
+author: "Yestin Arvin Gochuico"
+date: "2025-05-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(sf)
+library(tidyverse)
+library(geojsonio)
+library(rmapshaper)
+library(readxl)
+```
+```{r}
+# load GeoJSON
+world <- st_read("countries.geojson")
+
+# simplify geometry
+world_simple <- ms_simplify(world, keep = 0.0001, keep_shapes = TRUE)
+```
+```{r}
+# load your SDG CSV
+sdg <- read_csv("SDR2024-data.csv")
+
+# preview
+glimpse(sdg)
+```
+
+```{r}
+# select data
+sdg_selected <- sdg %>%
+  select(Country, year, `SDG Index Score`, goal1:goal17)
+
+# pivot
+sdg_long <- sdg_selected %>%
+  pivot_longer(
+    cols = c(`SDG Index Score`, starts_with("goal")),
+    names_to = "Goal",
+    values_to = "Value"
+  ) %>%
+  mutate(
+    Goal = ifelse(Goal == "SDG Index Score", "goal0", Goal)
+  )
+```
+```{r}
+glimpse(sdg_long)
+```
+```{r test_single_file}
+# Test with a single goal and year first
+g <- "goal1"
+y <- 2020
+
+cat("Testing single file generation for", g, "in year", y, "\n")
+
+# Filter data for this Goal & Year
+sdg_filtered <- sdg_long %>%
+  filter(Goal == g, year == y) %>%
+  select(Country, Value)
+
+# Check if we have data
+print(paste("Number of countries with data:", nrow(sdg_filtered)))
+
+# Join with world data
+# If joining by ID doesn't work well, we'll fall back to country name
+if("id" %in% colnames(world_simple) && "id" %in% colnames(sdg_filtered)) {
+  world_sdg <- world_simple %>%
+    left_join(sdg_filtered, by = "id") %>%
+    mutate(
+      # Ensure Value is a character and handle NAs properly
+      Value = ifelse(is.na(Value), "NA", as.character(Value))
+    ) %>%
+    # Select only needed columns
+    select(id, name, GeoAreaCode, Value, geometry)
+} else {
+  world_sdg <- world_simple %>%
+    left_join(sdg_filtered, by = c("name" = "Country")) %>%
+    mutate(
+      # Add GeoAreaCode (using the country id)
+      GeoAreaCode = id,
+      # Ensure Value is a character and handle NAs properly
+      Value = ifelse(is.na(Value), "NA", as.character(Value))
+    ) %>%
+    # Select only needed columns
+    select(id, name, GeoAreaCode, Value, geometry)
+}
+
+# Count how many countries have data
+data_count <- sum(!is.na(world_sdg$Value) & world_sdg$Value != "NA")
+print(paste("Countries with data after join:", data_count))
+
+# Preview the result
+print("Sample of joined data (without geometry):")
+head(st_drop_geometry(world_sdg))
+
+# Test writing a single file
+file_name <- paste0("sdg-", g, "-", y, ".geojson")
+geojson_write(world_sdg, file = file_name)
+print(paste("Created test file:", file_name))
+```
+```
+
+```{r}
+for (g in goals) {
+  for (y in years) {
+    cat("Processing:", g, "Year:", y, "\n")
+    
+    # Filter data for this Goal & Year
+    sdg_filtered <- sdg_long %>%
+      filter(Goal == g, year == y) %>%
+      select(Country, Value)
+    
+    # Join on country name + keep only needed columns
+    world_sdg <- world_simple %>%
+      left_join(sdg_filtered, by = c("name" = "Country")) %>%
+      mutate(
+        Value = ifelse(is.na(Value), "NA", as.character(Value))
+      ) %>%
+      select(id, name, Value, geometry)
+    
+    # Filter out invalid geometries (optional safety)
+    world_sdg <- world_sdg %>%
+      filter(!st_is_empty(geometry))
+    
+    # Output file name
+    file_name <- paste0("sdg-", g, "-", y, ".geojson")
+    
+    # Write GeoJSON
+    geojson_write(world_sdg, file = file_name)
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+```{r}
+geo_data <- st_read("sdg-poverty-2020.geojson")
+glimpse(st_drop_geometry(geo_data))
+```
+```{r}
+geo_data <- st_read("sdg-goal17-2023.geojson")
+glimpse(st_drop_geometry(geo_data))
+```
